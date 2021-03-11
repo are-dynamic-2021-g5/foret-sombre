@@ -17,8 +17,8 @@ En partant de cette théorie, je pensais établir une petite simulation d’un u
 
 Il est aussi possible de répondre à des problématiques comme : « En partant de ce principe, combien de temps nous reste-t-il à vivre ? » par exemple.
 
-### *Lien utiles*
-## Wikipédia
+## Lien utiles
+### Wikipédia
 https://fr.wikipedia.org/wiki/La_For%C3%AAt_sombre
 https://fr.wikipedia.org/wiki/Paradoxe_de_Fermi
 https://fr.wikipedia.org/wiki/%C3%89quation_de_Drake
