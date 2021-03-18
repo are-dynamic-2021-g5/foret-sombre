@@ -1,37 +1,16 @@
-## Welcome to GitHub Pages
+# Forêt sombre
 
-You can use the [editor on GitHub](https://github.com/are-dynamic-2021-g5/foret-sombre/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+La théorie de la forêt sombre, développée par Liu Cixin dans son oeuvre de science fiction intitulée « La Forêt Sombre » tome 2 de la trilogie «  Le problème à trois corps », est une théorie qui vise à répondre au paradoxe de Fermi en apparentant l’univers à une forêt obscure dans laquelle des proies et des prédateurs vivent sans ne jamais révéler leur présence.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Pour avancer sa théorie l’auteur par de plusieurs principes :
 
-### Markdown
+- La priorité de ces hypothétiques civilisations est la survie;
+- Les chaînes de suspicions
+- L'explosion technologique
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Ainsi dans le cas ou deux civilisations se rencontreraient on aurait trois possibilités possibles :
 
-```markdown
-Syntax highlighted code block
+1. Les deux sont agressives, elles s’annihilent, celle étant la plus avancée en matière de technologie survivant;
+2. L’une des deux est agressive et annihile l’autre;
+3. Les deux sont pacifiques, dans ce cas l’auteur instaure un principe de doute hyperbolique, dans lequel, ne sachant pas ce que l’autre pense et la survie étant leur priorité, elles sont forcément amenées à penser que l’autre leur est hostile et le résultat obtenu est similaire au deux précédents. (En résumé : je pense que tu penses que je pense que tu me veux du mal donc tu vas me taper dessus donc je tape en premier)
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/are-dynamic-2021-g5/foret-sombre/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
