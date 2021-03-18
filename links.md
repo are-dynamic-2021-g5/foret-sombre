@@ -13,3 +13,15 @@
 
 ### Astrophysics data system
 	[The Great Silence - the Controversy Concerning Extraterrestrial Intelligent Life](http://articles.adsabs.harvard.edu/full/1983QJRAS..24..283B)
+
+### Arxiv
+	[Fermi's Paradox Is a Daunting Problem – Under Whatever Label] ( https://arxiv.org/ftp/arxiv/papers/1609/1609.09801.pdf )
+
+	[The Fermi Paradox is Neither Fermi’s Nor a Paradox] ( https://arxiv.org/ftp/arxiv/papers/1605/1605.09187.pdf )
+
+	[Fermi Paradox] ( http://brainu.org/sites/brainu.org/files/lessons/wikipedia_fermi_paradox_information.pdf )
+
+	[A joint analysis of the Drake equation and the Fermi paradox] ( https://arxiv.org/ftp/arxiv/papers/1301/1301.6411.pdf )
+
+	[A Protocol for Messaging to Extraterrestrial Intelligence] ( https://arxiv.org/ftp/arxiv/papers/1101/1101.4968.pdf )
+
