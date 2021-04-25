@@ -469,7 +469,7 @@ def tkinter_setup(model):
         L = L_scale.get()
 
         # the expected number of populated site in a galaxy
-        E = round(R*fg*ne*fl*fi*fc*L)
+        E = round(R*fg*ne*fl*fi*fc*L) + 1
 
     # Frames
     plot_frame = Frame(root, bg='black')
