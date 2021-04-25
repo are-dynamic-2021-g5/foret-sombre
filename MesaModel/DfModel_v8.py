@@ -47,7 +47,7 @@ fi = 0.1  # 0.01 - 1.0 / 10e-8 # fraction of the latter upon which intelligence 
 fc = 0.5  # 0.01 - 1.0 # fraction of intelligent species which devellop detectable tech
 L = 10**6  # arbitrary # the average lifespan of such a technocontactal culture
 # the expected number of populated site in a galaxy
-E = round(R*fg*ne*fl*fi*fc*L)
+E = round(R*fg*ne*fl*fi*fc*L) + 1
 
 ################################
 
