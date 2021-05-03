@@ -29,14 +29,14 @@ I = 10
 emission_range = 5
 reception_range = 5
 technocontactal_range = 3  # From Type 0 to Type 3 (Cf. Kardashev Scale)
-suspicion_cooldown = 3
+suspicion_cooldown = 5
 
 # UNIVERS PARAMETER
-univers_scale = 1000
+univers_scale = 10000
 opacity_factor = 1
-threshold = 0.01
+threshold = 0.1
 nb_clusters = 1
-clusters_scale = 1000
+clusters_scale = univers_scale/nb_clusters # Modifiable à souhait
 
 # DRAKE EQUATION PARAMETERS : E = R*fg*ne*fl*fi*fc*L
 R = 2  # 1 - 3 # average galactic rate of star production
@@ -173,7 +173,7 @@ class CivModel(Model):
 
     def calculate_distance(self):
         """Créé un dictionnaire dont les keys sont la pair d'agent en question la la value la distance les séparant"""
-        distances_log = {}
+        distances_log = {} #key (a, b), value float(distance)
         for i in self.schedule._agents:
             #print(distances_log, len(distances_log))
             if i in self.schedule._agents.keys():
@@ -374,24 +374,25 @@ class CivModel(Model):
 ### Indicateurs ###############################################################
     
     def distance_moyenne(self, time):
-        agent_ids = self.historique[time]
+        agent_ids = [a.unique_id for a in self.historique[time]]
         sum_dist = 0
-        n = 0
-        for a, b in self.distances_log.key():
-            if a in agent_ids and b in agent_ids:
-                sum_dist += self.distances_log[(a, b)]
-                n +=1
 
-        return sum_dist/n
+        for a, b in list(self.distances_log.keys()):
+            #print(1)
+            if a in agent_ids and b in agent_ids:
+                #print(2)
+                sum_dist += self.distances_log[(a, b)]
+
+        return sum_dist/((len(agent_ids)*(len(agent_ids)+1))/2)
 
     def ratio_P(self, time):
-        agent_ids = self.historique[time]
+        agents = self.historique[time]
         tot_P = 0
-        for i in agent_ids:
+        for i in agents:
             if i.type == 0:
                 tot_P += 1
 
-        return tot_P/len(agent_ids)
+        return tot_P/len(agents)
 
     def ratio_A(self, time):
         return 1-self.ratio_P(time)
@@ -426,8 +427,22 @@ class CivModel(Model):
 
         return sum_ems/n
 
+    def nb_agent_alive(self, time):
+        return len(self.historique[time])
+
+    def nb_agent_dead(self, time):
+        return self.nb_agents-len(self.historique[time])
+
     def nb_contact(self, time):
-        return
+        return len(self.connection_logs[time+1])
+
+    def plot_ind(self, f):
+        fig, axs = plt.subplots(1, 1, figsize=(5, 5))
+        x = [k for k in range(self.timeline)]
+        y = [f(i) for i in range(self.timeline)]
+        axs.plot(x, y)
+        axs.set_ylabel(f.__name__)
+        axs.set_xlabel('étapes')
 
 ###############################################################################
 
@@ -451,12 +466,14 @@ def tkinter_setup(model):
         
         # Labels update
         nb_agents_var.set("Nombre de civilisation "+str(len(to_plot)))
+        nb_morts_var.set("Nombre de civilisation mortes "+str(model.nb_agent_dead(slider.get())))        
         ems_moyen_var.set("Niveau moyen d'émission "+str(round(model.ems_moyen(slider.get()), 2)))
         rec_moyen_var.set("Niveau moyen de réception "+str(round(model.rec_moyen(slider.get()), 2)))
         tech_moyen_var.set("Niveau technologique moyen "+ str(round(model.tech_moyen(slider.get()), 2)))
         P_ratio_var.set("Ratio Pacifique : "+ str(round(model.ratio_P(slider.get()), 2)))
         A_ratio_var.set("Ratio Aggressif : "+ str(round(model.ratio_A(slider.get()), 2)))
-
+        nb_contact_var.set("Nombre de contact : "+ str(model.nb_contact(slider.get())))
+        distance_moyenne_var.set("Distance moyenne : "+ str(int(model.distance_moyenne(slider.get()))))
     # Get slider values
     def get_sliders_value():
         global R, fg, ne, fl, fi, fc, L, E
@@ -480,12 +497,13 @@ def tkinter_setup(model):
     plot_frame = Frame(root, bg='black')
     button_frame = Frame(root, bg='white')
     label_frame = Frame(root, bg='white', padx=10)
-    settings_frame = Frame(root, bg='white', padx=10, pady=10)
+    #settings_frame = Frame(root, bg='white', padx=10, pady=10)
 
     # Widgets
     quitter_button = Button(button_frame, bg='white', text='Quitter', command=quit_all)
     start_button = Button(button_frame, bg='white', text='Start', command=main)
     apply_button = Button(button_frame, bg='white', text='Apply', command=get_sliders_value)
+    """
     R_scale = Scale(settings_frame, bg='white', label='R', from_=0.1, to=5, resolution=0.1, orient=HORIZONTAL)
     fg_scale = Scale(settings_frame, bg='white', label='fg', from_=0.1, to=0.1, resolution=0.1, orient=HORIZONTAL)
     ne_scale = Scale(settings_frame, bg='white', label='ne', from_=0.1, to=5, resolution=0.1, orient=HORIZONTAL)
@@ -493,27 +511,34 @@ def tkinter_setup(model):
     fi_scale = Scale(settings_frame, bg='white', label='fi', from_=0.01, to=1, resolution=0.01, orient=HORIZONTAL)
     fc_scale = Scale(settings_frame, bg='white', label='fc', from_=0.01, to=1, resolution=0.01, orient=HORIZONTAL)
     L_scale = Scale(settings_frame, bg='white', label='L', from_=1000000, to=5000000000, resolution=1000000, orient=HORIZONTAL)
+    """
     slider = Scale(root, bg='white', from_=0, to=I-1, orient=HORIZONTAL, state='active', tickinterval=round(I/4), command=update)
 
     # Labels
     # Static labels
     nb_init_agents = Label(label_frame, bg='white', text="Nombre initial de civilisation "+ str(model.nb_agents))
-    drkeq_label = Label(settings_frame, bg='white', text="Équation de Drake :")
+    #drkeq_label = Label(settings_frame, bg='white', text="Équation de Drake :")
     # Dynamic Var
     nb_agents_var = StringVar()
+    nb_morts_var = StringVar()
     ems_moyen_var = StringVar()
     rec_moyen_var = StringVar()
     tech_moyen_var = StringVar()
     P_ratio_var = StringVar()
     A_ratio_var = StringVar()
+    nb_contact_var = StringVar()
+    distance_moyenne_var = StringVar()
+
     # Dynamic labels
+    nb_morts_label = Label(label_frame, bg='white', padx=10, textvariable=nb_morts_var)    
     nb_agents_label = Label(label_frame, bg='white', padx=10, textvariable=nb_agents_var)
     ems_moyen_label = Label(label_frame, bg='white', padx=10, textvariable=ems_moyen_var)
     rec_moyen_label = Label(label_frame, bg='white', padx=10, textvariable=rec_moyen_var)
     tech_moyen_label = Label(label_frame, bg='white', padx=10, textvariable=tech_moyen_var)
     P_ratio_label = Label(label_frame, bg='white', padx=10, textvariable=P_ratio_var)
     A_ratio_label = Label(label_frame, bg='white', padx=10, textvariable=A_ratio_var)
-
+    nb_contact_label = Label(label_frame, bg='white', padx=10, textvariable=nb_contact_var)
+    distance_moyenne_label = Label(label_frame, bg='white', padx=10, textvariable=distance_moyenne_var)
     # Grid configuration
     root.columnconfigure(0, weight=1)
     root.rowconfigure(0, weight=1)
@@ -523,7 +548,7 @@ def tkinter_setup(model):
     plot_frame.grid(row=0, column=0, rowspan=3, sticky='nsew')
     button_frame.grid(row=0, column=1, sticky='nsew')
     label_frame.grid(row=1, column=1, sticky='new')
-    settings_frame.grid(row=0, column=2, rowspan=2, sticky='nsew')
+    #settings_frame.grid(row=0, column=2, rowspan=2, sticky='nsew')
 
     # Widgets
     start_button.grid(row=0, column=1, sticky='nsew')
@@ -531,7 +556,7 @@ def tkinter_setup(model):
     apply_button.grid(row=0, column=2, sticky='nsew')
 
     slider.grid(row=3, column=0, sticky='nsew')
-
+    """
     R_scale.grid(row=1, column=0, sticky='nsew')
     fg_scale.grid(row=2, column=0, sticky='nsew')
     ne_scale.grid(row=3, column=0, sticky='nsew')
@@ -539,16 +564,19 @@ def tkinter_setup(model):
     fi_scale.grid(row=5, column=0, sticky='nsew')
     fc_scale.grid(row=6, column=0, sticky='nsew')
     L_scale.grid(row=7, column=0, sticky='nsew')
-
+    """
     # Labels
     nb_init_agents.grid(row=1, column=0, sticky='ne')
     nb_agents_label.grid(row=2, column=0, sticky='ne')
-    ems_moyen_label.grid(row=3, column=0, sticky='ne')
-    rec_moyen_label.grid(row=4, column=0, sticky='ne')
-    tech_moyen_label.grid(row=5, column=0, sticky='ne')
-    P_ratio_label.grid(row=6, column=0, sticky='ne')
-    A_ratio_label.grid(row=7, column=0, sticky='ne')
-    drkeq_label.grid(row=0, column=0, sticky='nsew')
+    nb_morts_label.grid(row=3, column=0, sticky='ne')
+    ems_moyen_label.grid(row=4, column=0, sticky='ne')
+    rec_moyen_label.grid(row=5, column=0, sticky='ne')
+    tech_moyen_label.grid(row=6, column=0, sticky='ne')
+    P_ratio_label.grid(row=7, column=0, sticky='ne')
+    A_ratio_label.grid(row=8, column=0, sticky='ne')
+    nb_contact_label.grid(row=9, column=0, sticky='ne')
+    distance_moyenne_label.grid(row=10, column=0, sticky='ne')
+    #drkeq_label.grid(row=0, column=0, sticky='nsew')
 
     # 3D graph
     plt.style.use("dark_background")
@@ -562,10 +590,39 @@ def tkinter_setup(model):
 
     ###############################################
 
+def plot_lot(model, f, nb_mod, nb_step, mn=True):
+
+        Y=[]
+        x = [k for k in range(nb_step)]
+
+        fig, axs = plt.subplots(1, 1)
+        axs.set_ylabel(f.__name__)
+        axs.set_xlabel('étapes')
+
+        for i in range(nb_mod):
+            M = model(E)
+            for i in range (nb_step):
+                M.step()
+       
+            y = [f(M, i) for i in range(nb_step)]
+            Y.append(y)
+            axs.plot(x, y, color='black')
+
+        if mn:
+            mean = [0 for i in range(nb_step)]
+            for l in Y:
+                for j in range(len(l)):
+                    mean[j] += l[j]
+
+            for i in range(len(mean)):
+                mean[i] /= nb_mod
+        
+            axs.plot(x, mean, color='red', linewidth=5)
+
 
 def main():
 
-    model = CivModel(E)
+    model = CivModel(1000)
 
     ### MAIN LOGIC ####
         
