@@ -622,7 +622,7 @@ def plot_lot(model, f, nb_mod, nb_step, mn=True):
 
 def main():
 
-    model = CivModel(1000)
+    model = CivModel(E)
 
     ### MAIN LOGIC ####
         
