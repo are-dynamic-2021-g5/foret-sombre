@@ -1,4 +1,7 @@
-# Forêt sombre
+## Website
+https://areforetsombre.wixsite.com/foretsombre
+
+# La Théorie de la Forêt sombre
 
 La théorie de la forêt sombre, développée par Liu Cixin dans son oeuvre de science fiction intitulée « La Forêt Sombre » tome 2 de la trilogie «  Le problème à trois corps », est une théorie qui vise à répondre au paradoxe de Fermi en apparentant l’univers à une forêt obscure dans laquelle des proies et des prédateurs vivent sans ne jamais révéler leur présence.
 
@@ -16,17 +19,3 @@ Ainsi dans le cas ou deux civilisations se rencontreraient on aurait trois possi
 En partant de cette théorie, je pensais établir une petite simulation d’un univers plus ou moins peuplé, avec des civilisations plus oui moins agressives, ajouter plusieurs paramètres comme la capacité à émettre des ondes, à en recevoir, à communiquer, faire varier la distance entre les planètes habitées, le niveau technologique etc…
 
 Il est aussi possible de répondre à des problématiques comme : « En partant de ce principe, combien de temps nous reste-t-il à vivre ? » par exemple.
-
-## Lien utiles
-### Wikipédia
-[La forêt sombre](https://fr.wikipedia.org/wiki/La_For%C3%AAt_sombre)<br>
-[Paradoxe de Fermi](https://fr.wikipedia.org/wiki/Paradoxe_de_Fermi)<br>
-[Équation de Drake](https://fr.wikipedia.org/wiki/%C3%89quation_de_Drake)<br>
-[Échelle de Kardachev](https://fr.wikipedia.org/wiki/%C3%89chelle_de_Kardachev)<br>
-
-### [Trello](https://trello.com/b/jAy5j1qx/are-foret-sombre) 
-
-## Notre site internet
-https://areforetsombre.wixsite.com/foretsombre
-
-
